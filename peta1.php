@@ -55,6 +55,7 @@
       #target {
         width: 345px;
       }
+	    #input{width}
 	  
 	   </style>
   </head>
