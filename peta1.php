@@ -82,3 +82,20 @@
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
+	      
+	var markers = [];
+        // menunggu user memilih yang di prediksi
+        // detail tentang tempat.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Menghapus penanda terakir
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
