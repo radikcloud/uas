@@ -15,8 +15,7 @@
         margin: 0;
         padding: 0;
       }
-	    
-	      .controls {
+	  .controls {
         margin-top: 10px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
@@ -55,52 +54,42 @@
       #target {
         width: 345px;
       }
-	   
-	  
 	   </style>
   </head>
   
   <body>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
-
 	  <script>
       
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33.8688, lng: 151.2195},
-		
           zoom: 13,
           mapTypeId: 'roadmap'
         });
-
-        // membuat search box.
+        // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-        // hasil dari searchbox.
+        // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
-	      
-	var markers = [];
-        // menunggu user memilih yang di prediksi
-        // detail tentang tempat.
+var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
         searchBox.addListener('places_changed', function() {
           var places = searchBox.getPlaces();
-
           if (places.length == 0) {
             return;
           }
-
-          // Menghapus penanda terakir
+          // Clear out the old markers.
           markers.forEach(function(marker) {
             marker.setMap(null);
           });
           markers = [];
-		
-	// get icon, nama dan lokasi.
+          // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
             if (!place.geometry) {
@@ -114,16 +103,15 @@
               anchor: new google.maps.Point(17, 34),
               scaledSize: new google.maps.Size(25, 25)
             };
-
-            // Membuat penanda.
+            // Create a marker for each place.
             markers.push(new google.maps.Marker({
               map: map,
               icon: icon,
               title: place.name,
               position: place.geometry.location
             }));
-
             if (place.geometry.viewport) {
+              // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
             } else {
               bounds.extend(place.geometry.location);
@@ -132,13 +120,11 @@
           map.fitBounds(bounds);
         });
       }
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmRPJuO9yKW1vp4XlSoYD4eBnrb8hDOb4&libraries=places&callback=initAutocomplete"
          async defer></script>
 	<br>
 	<br>
-	
+		 
   </body>
 </html>
-
