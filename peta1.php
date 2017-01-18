@@ -68,7 +68,8 @@
       
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
+          //center: {lat: -33.8688, lng: 151.2195},
+		center : {lat : -7.9658969, lng: 112.6052842},
           zoom: 13,
           mapTypeId: 'roadmap'
         });
